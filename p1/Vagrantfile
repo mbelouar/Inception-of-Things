@@ -1,9 +1,8 @@
-
 Vagrant.configure("2") do |config|
 
   # SERVER NODE
   config.vm.define "mbelouarS" do |server|
-    server.vm.box = "ubuntu/trusty64"
+    server.vm.box = "ubuntu/focal64"
     server.vm.hostname = "mbelouarS"
 
     # Create a forwarded port mapping which allows access to a specific port
@@ -24,15 +23,14 @@ Vagrant.configure("2") do |config|
     end
     
     # Enable provisioning with a shell script. This is a simple example.
-    # server.vm.provision "shell", inline: <<-SHELL
-    #   apt-get update
-    #   apt-get install -y apache2
-    # SHELL
+    server.vm.provision "shell", path: "scripts/kubectl.sh"
+    server.vm.provision "shell", path: "scripts/k3s.sh"
+    
   end
 
   # WORKER NODE
   config.vm.define "mbelouarSW" do |worker|
-    worker.vm.box = "ubuntu/trusty64"
+    worker.vm.box = "ubuntu/focal64"
     worker.vm.hostname = "mbelouarSW"
 
     # Create a forwarded port mapping which allows access to a specific port
