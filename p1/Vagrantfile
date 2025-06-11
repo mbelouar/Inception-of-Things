@@ -18,14 +18,14 @@ Vagrant.configure("2") do |config|
     server.vm.provider "virtualbox" do |vb|
       vb.name = "mbelouarS_VM"
       vb.gui = false
-      vb.memory = "512"
+      vb.memory = "1024"
       vb.cpus = 1
     end
-    
-    # Enable provisioning with a shell script. This is a simple example.
+      # Enable provisioning with a shell script. This is a simple example.
     server.vm.provision "shell", path: "scripts/kubectl.sh"
     server.vm.provision "shell", path: "scripts/k3s.sh"
     server.vm.provision "shell", path: "scripts/copy_token.sh"
+    server.vm.provision "shell", path: "scripts/validate_cluster.sh", run: "always"
     
   end
 
@@ -40,18 +40,18 @@ Vagrant.configure("2") do |config|
     worker.vm.network "private_network", ip: "192.168.56.111"
 
     # create a synced folder that is shared between the host and guest
-    # worker.vm.synced_folder "../data", "/vagrant_data"
-    # worker.vm.synced_folder ".", "/vagrant", disabled: true
+    worker.vm.synced_folder "./token", "/vagrant"
 
     # provider-specific configuration so you can fine-tune various
     worker.vm.provider "virtualbox" do |vb|
       vb.name = "mbelouarSW_VM"
       vb.gui = false
-      vb.memory = "512"
+      vb.memory = "1024"
       vb.cpus = 1
     end
     
     # Enable provisioning with a shell script. This is a simple example.
+    worker.vm.provision "shell", path: "scripts/worker_join.sh"
     # worker.vm.provision "shell", inline: <<-SHELL
     #   apt-get update
     #   apt-get install -y apache2
