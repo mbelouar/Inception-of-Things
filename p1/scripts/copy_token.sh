@@ -11,6 +11,9 @@ while [ ! -f "$NODE_TOKEN" ]; do
   sleep 2
 done
 
+# Ensure token directory exists
+sudo mkdir -p /vagrant/token
+
 # Copy token and kubeconfig to synced folder
-sudo cp "$NODE_TOKEN" /vagrant/
-sudo cp "$KUBE_CONFIG" /vagrant/
+sudo cp "$NODE_TOKEN" /vagrant/token/node-token
+sudo cp "$KUBE_CONFIG" /vagrant/token/k3s.yaml
