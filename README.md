@@ -17,7 +17,7 @@ The project is organized into multiple parts:
 
 ### 🔷 Part 1: K3s Multi-Node Cluster
 
-<img src="./images/k3s-logo.png" align="right" width="350">
+<img src="./images/k3s-logo.png" align="right" width="200">
 
 This part focuses on setting up a basic K3s cluster with server and worker nodes. K3s is a lightweight Kubernetes distribution perfect for edge computing, IoT applications, and development environments.
 
