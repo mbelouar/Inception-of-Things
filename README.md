@@ -3,6 +3,8 @@
 
 # Inception of Things (IoT)
 
+<img src="./images/k3s-logo.png" alt="K3s Logo" width="300">
+
 [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 [![Vagrant](https://img.shields.io/badge/vagrant-%231563FF.svg?style=for-the-badge&logo=vagrant&logoColor=white)](https://www.vagrantup.com/)
 [![K3s](https://img.shields.io/badge/k3s-%230075A8.svg?style=for-the-badge&logo=rancher&logoColor=white)](https://k3s.io/)
@@ -17,7 +19,7 @@ The project is organized into multiple parts:
 
 ### 🔷 Part 1: K3s Multi-Node Cluster
 
-<img src="./images/k3s-logo.png" align="right" width="200">
+<img src="./images/p1-architecture.png" align="right" width="350">
 
 This part focuses on setting up a basic K3s cluster with server and worker nodes. K3s is a lightweight Kubernetes distribution perfect for edge computing, IoT applications, and development environments.
 
@@ -34,9 +36,7 @@ This part focuses on setting up a basic K3s cluster with server and worker nodes
 
 ### 🔷 Part 2: Single-Node K3s with Application Deployment
 
-<kbd>
-<img src="./images/kubernetes-logo.png" width="200">
-</kbd>
+<img src="./images/p2-architecture.png" align="right" width="350">
 
 This part demonstrates deploying multiple applications on a single K3s server with Ingress routing. Learn how to manage traffic between applications using Kubernetes' native routing capabilities.
 
