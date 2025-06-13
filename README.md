@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./images/Inceptionofthings.png" alt="Inception of Things" width="500">
+  <img src="./images/Inceptionofthings.png" alt="Inception of Things" width="700">
 
 # Inception of Things (IoT)
 
