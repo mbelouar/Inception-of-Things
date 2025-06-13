@@ -1,12 +1,18 @@
+![Inception of Things](./images/Inceptionofthings.png)
+
 # Inception of Things (IoT)
 
 This project aims to deepen your knowledge of container orchestration by implementing K3s with Vagrant. It demonstrates how to create and configure Kubernetes clusters in local virtualized environments.
 
 ## Project Structure
 
+![K3s Architecture](./images/k3s-architecture.png)
+
 The project is organized into multiple parts:
 
 ### Part 1: K3s Multi-Node Cluster
+
+![Part 1 - K3s Multi-Node Architecture](./images/p1-architecture.png)
 
 This part focuses on setting up a basic K3s cluster with server and worker nodes.
 
@@ -22,6 +28,8 @@ This part focuses on setting up a basic K3s cluster with server and worker nodes
   - Labeled with `node-role.kubernetes.io/worker=worker`
 
 ### Part 2: Single-Node K3s with Application Deployment
+
+![Part 2 - Application Deployment with Ingress](./images/p2-architecture.png)
 
 This part demonstrates deploying multiple applications on a single K3s server with Ingress routing.
 
