@@ -16,9 +16,12 @@ spec:
     spec:
       containers:
       - name: app1-container
-        image: hashicorp/http-echo
-        args:
-          - "-text=Hello from app1"
+        image: mbelouar/hello-kubernetes:arm
         ports:
-          - containerPort: 5678
+            - containerPort: 5678
+        env:
+          - name: MESSAGE
+            value: "Hello from app1"
+          - name: PORT
+            value: "5678"
 
