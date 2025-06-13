@@ -32,9 +32,7 @@ spec:
     spec:
       containers:
       - name: app1-container
-        image: paulbouwer/hello-kubernetes
+        image: nginx:alpine
         ports:
         - containerPort: 8080
-        env:
-        - name: MESSAGE
-          value: "Hello from app1"
+
