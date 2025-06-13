@@ -12,19 +12,19 @@ kubectl expose deployment app1-deployment \
   --type=ClusterIP \
   --name=app1-svc \
   --port=80 \
-  --target-port=80
+  --target-port=5678
 
 kubectl expose deployment app2-deployment \
   --type=ClusterIP \
   --name=app2-svc \
   --port=80 \
-  --target-port=80
+  --target-port=5678
 
 kubectl expose deployment app3-deployment \
   --type=ClusterIP \
   --name=app3-svc \
   --port=80 \
-  --target-port=80
+  --target-port=5678
 
 sleep 5
 

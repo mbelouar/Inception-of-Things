@@ -16,7 +16,9 @@ spec:
     spec:
       containers:
       - name: app1-container
-        image: nginx:alpine
+        image: hashicorp/http-echo
+        args:
+          - "-text=Hello from app1"
         ports:
-        - containerPort: 80
+          - containerPort: 5678
 
