@@ -17,7 +17,7 @@ The project is organized into multiple parts:
 
 ### 🔷 Part 1: K3s Multi-Node Cluster
 
-<img src="https://raw.githubusercontent.com/k3s-io/k3s/master/docs/img/how-it-works-k3s-revised.svg" align="right" width="400">
+<img src="./images/k3s-logo.png" align="right" width="200">
 
 This part focuses on setting up a basic K3s cluster with server and worker nodes. K3s is a lightweight Kubernetes distribution perfect for edge computing, IoT applications, and development environments.
 
@@ -35,7 +35,7 @@ This part focuses on setting up a basic K3s cluster with server and worker nodes
 ### 🔷 Part 2: Single-Node K3s with Application Deployment
 
 <kbd>
-<img src="https://kubernetes.io/images/kubernetes-horizontal-color.png" width="300">
+<img src="./images/kubernetes-logo.png" width="200">
 </kbd>
 
 This part demonstrates deploying multiple applications on a single K3s server with Ingress routing. Learn how to manage traffic between applications using Kubernetes' native routing capabilities.
@@ -107,7 +107,7 @@ To access the applications deployed in Part 2:
 
 ### Network Configuration
 
-<img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/flannel_icon_132192.png" align="right" width="100">
+<img src="./images/flannel-logo.png" align="right" width="200">
 
 Both parts use `eth1` (192.168.56.110/111) as the primary network interface for K3s communication, configured using the `--flannel-iface eth1` parameter. This ensures that:
 
@@ -170,9 +170,9 @@ The applications use the `mbelouar/hello-kubernetes:arm` container image which r
 
 ## 🔗 Resources
 
-- [<img src="https://k3s.io/img/k3s-logo-light.svg" height="18"> K3s Documentation](https://rancher.com/docs/k3s/latest/en/)
-- [<img src="https://www.vagrantup.com/img/logo-hashicorp.svg" height="18"> Vagrant Documentation](https://www.vagrantup.com/docs)
-- [<img src="https://kubernetes.io/images/favicon.png" height="18"> Kubernetes Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [K3s Documentation](https://rancher.com/docs/k3s/latest/en/)
+- [Vagrant Documentation](https://www.vagrantup.com/docs)
+- [Kubernetes Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
 <div align="center">
   <sub>Created with ❤️ by Mohammed Belouarraq • June 2025</sub>
