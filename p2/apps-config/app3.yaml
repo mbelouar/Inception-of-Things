@@ -34,4 +34,4 @@ spec:
       - name: app3-container
         image: nginx:alpine
         ports:
-        - containerPort: 8080
+        - containerPort: 80
