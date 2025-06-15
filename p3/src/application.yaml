@@ -19,14 +19,14 @@ spec:
     syncOptions:
       - CreateNamespace=true
   # Add health checks for the application
-  ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-        - /spec/replicas
-  revisionHistoryLimit: 3
-  # Define health check criteria
-  info:
-    - name: "Health Status"
-      value: |
-        Health status for myapp-argo application
+  # ignoreDifferences:
+  #   - group: apps
+  #     kind: Deployment
+  #     jsonPointers:
+  #       - /spec/replicas
+  # revisionHistoryLimit: 3
+  # # Define health check criteria
+  # info:
+  #   - name: "Health Status"
+  #     value: |
+  #       Health status for myapp-argo application
