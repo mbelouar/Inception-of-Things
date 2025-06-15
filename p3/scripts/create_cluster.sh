@@ -18,7 +18,11 @@ create_cluster() {
         fi
     fi
     
-    k3d cluster create p3
+    # Create cluster with port mappings for ingress
+    k3d cluster create p3 \
+        --port "80:80@loadbalancer" \
+        --port "443:443@loadbalancer" \
+        --api-port 6550
     
     if [ $? -ne 0 ]; then
         print_error "Failed to create cluster"

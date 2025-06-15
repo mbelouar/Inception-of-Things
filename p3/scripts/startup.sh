@@ -32,8 +32,17 @@ check_os() {
 # Install required tools
 install_tools() {
     print_status "Installing required tools..."
-    sudo apt-get update
-    sudo apt-get install -y curl wget git
+    
+    # Check if Homebrew is installed
+    if ! command -v brew >/dev/null 2>&1; then
+        print_status "Installing Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+        print_status "Homebrew already installed"
+    fi
+    
+    # Install basic tools with brew
+    brew install curl wget git
     
     tools=("docker" "kubectl" "k3d" "argocd")
     for tool in "${tools[@]}"; do

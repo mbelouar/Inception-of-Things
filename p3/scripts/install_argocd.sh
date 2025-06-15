@@ -16,15 +16,14 @@ install_argocd() {
     print_status "Waiting for ArgoCD server to be ready..."
     kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=300s
 
-    # change the default admin password
-    print_status "Changing default admin password..."
-    kubectl -n argocd patch secret argocd-secret \
-        -p '{"stringData": {"admin.password": "$2a$10$rRyBkqmXUY9rOHXcvfWQBOQXllYJzqNhGWKvyY8EXz8oUK7QoJHse"}}' \
-        --type=merge
+    # Get the default admin password
+    print_status "Getting the default admin password..."
+    ARGOCD_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
     if [ $? -eq 0 ]; then
-        print_status "Default admin password changed successfully"
+        print_status "Retrieved initial admin password successfully"
+        print_status "ArgoCD admin password: $ARGOCD_PASSWORD"
     else
-        print_error "Failed to change default admin password"
+        print_error "Failed to retrieve initial admin password"
         exit 1
     fi
     
