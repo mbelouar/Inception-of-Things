@@ -6,8 +6,9 @@
 [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 [![Vagrant](https://img.shields.io/badge/vagrant-%231563FF.svg?style=for-the-badge&logo=vagrant&logoColor=white)](https://www.vagrantup.com/)
 [![K3s](https://img.shields.io/badge/k3s-%230075A8.svg?style=for-the-badge&logo=rancher&logoColor=white)](https://k3s.io/)
+[![ArgoCD](https://img.shields.io/badge/argocd-%232A7DE1.svg?style=for-the-badge&logo=argo&logoColor=white)](https://argoproj.github.io/cd/)
 
-This project demonstrates container orchestration using K3s with Vagrant. Create and manage lightweight Kubernetes clusters in virtualized environments, from basic multi-node setups to complete application deployments with Ingress routing.
+This project demonstrates container orchestration using K3s with Vagrant and K3D with ArgoCD. Create and manage lightweight Kubernetes clusters in various environments, from multi-node setups to GitOps-driven CI/CD pipelines.
 
 </div>
 
@@ -43,14 +44,28 @@ This part demonstrates deploying multiple applications on a single K3s server wi
     - `app2-deployment`: Accessible via `app2.com`
     - `app3-deployment`: Accessible as default backend
 
+### 🔷 Part 3: CI/CD with K3D and ArgoCD
+
+<img src="https://argo-cd.readthedocs.io/en/stable/assets/logo.png" align="right" width="200">
+
+This part implements a CI/CD pipeline using K3D and ArgoCD on macOS. It demonstrates GitOps principles through automated deployments from a Git repository directly to Kubernetes.
+
+- **Local K3D Cluster**:
+  - Components: K3D, kubectl, ArgoCD
+  - Deployments:
+    - ArgoCD: Continuous delivery tool
+    - Playground app: Simple application with 2 replicas
+
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- ✅ [Vagrant](https://www.vagrantup.com/downloads) (v2.2.19 or later)
-- ✅ [VMware Desktop](https://www.vmware.com/products/workstation-pro.html) (preferred) or VirtualBox
+- ✅ [Vagrant](https://www.vagrantup.com/downloads) (v2.2.19 or later) - for Parts 1 & 2
+- ✅ [VMware Desktop](https://www.vmware.com/products/workstation-pro.html) (preferred) or VirtualBox - for Parts 1 & 2
+- ✅ [Docker Desktop](https://www.docker.com/products/docker-desktop/) - for Part 3
+- ✅ macOS operating system - for Part 3
 - ✅ Sufficient RAM for VM allocation (minimum 2GB)
-- ✅ ARM-based system (project uses ARM64 VM images)
+- ✅ ARM-based system (project uses ARM64 VM images) - for Parts 1 & 2
 
 ### 🔧 Installation
 
@@ -80,6 +95,15 @@ This part demonstrates deploying multiple applications on a single K3s server wi
 
    > ℹ️ This deploys a single node with three applications and configures the Ingress controller.
 
+4. Part 3: Set up K3D with ArgoCD for CI/CD
+
+   ```bash
+   cd ../p3
+   make setup
+   ```
+
+   > ℹ️ This creates a local K3D cluster, installs ArgoCD, and sets up an application deployment with GitOps workflow.
+
 ### 🌐 Accessing Applications (Part 2)
 
 To access the applications deployed in Part 2:
@@ -99,17 +123,52 @@ To access the applications deployed in Part 2:
    | App 2       | [http://app2.com](http://app2.com)             | Hello Kubernetes App 2  |
    | Default App | [http://192.168.56.110](http://192.168.56.110) | Default backend (App 3) |
 
+### 🌐 Accessing Applications (Part 3)
+
+To access the applications deployed in Part 3:
+
+1. Access ArgoCD UI:
+
+   ```bash
+   cd p3
+   make port-forward
+   ```
+
+2. Access the ArgoCD dashboard:
+
+   - URL: [https://localhost:8080](https://localhost:8080)
+   - Username: `admin`
+   - Password: (displayed during installation)
+
+3. To access the deployed playground application, add this entry to your `/etc/hosts` file:
+
+   ```
+   127.0.0.1 playground.com
+   ```
+
+4. Then you can access it at [http://playground.com](http://playground.com)
+
 ## 🔍 Implementation Details
 
 ### Network Configuration
 
 <img src="./images/flannel-logo.png" align="right" width="200">
 
-Both parts use `eth1` (192.168.56.110/111) as the primary network interface for K3s communication, configured using the `--flannel-iface eth1` parameter. This ensures that:
+#### Parts 1 & 2
+
+These parts use `eth1` (192.168.56.110/111) as the primary network interface for K3s communication, configured using the `--flannel-iface eth1` parameter. This ensures that:
 
 - Cluster internal traffic uses the private network
 - Flannel CNI provides proper pod networking
 - VM-to-VM communication is isolated from host network traffic
+
+#### Part 3
+
+The K3D cluster in Part 3 uses Docker's network with port mappings:
+
+- Port 80 and 443 mapped from the container to the host
+- Internal Kubernetes API server accessible on port 6550
+- ArgoCD UI available via port forwarding to localhost:8080
 
 ### Deployment Configuration
 
@@ -120,22 +179,37 @@ Both parts use `eth1` (192.168.56.110/111) as the primary network interface for 
   ```
 
 - **Part 2**: Uses YAML configurations in the `apps-config/` directory to deploy applications with Ingress routing
+
   ```
   Ingress Controller ⟹ Service ⟹ Deployments ⟹ Pods
   ```
 
+- **Part 3**: Uses ArgoCD with GitOps approach for application deployment and management
+  ```
+  Git Repository ⟹ ArgoCD ⟹ K3D Cluster ⟹ Pods
+  ```
+
 ### Docker Images
+
+#### Parts 1 & 2
 
 The applications use the `mbelouar/hello-kubernetes:arm` container image which runs a simple web server on port 5678, displaying information about the pod, node, and namespace.
 
+#### Part 3
+
+The application uses the `wil42/playground:v1` container image which runs on port 8888, a simple web application that ArgoCD automatically deploys and manages.
+
 ## ⚠️ Troubleshooting
 
-| Issue                     | Solution                                                                                           |
-| ------------------------- | -------------------------------------------------------------------------------------------------- |
-| **K3s fails to start**    | Verify that the `eth1` interface is properly configured in your VM. Check with `ip addr show eth1` |
-| **Worker not joining**    | Ensure the `token` directory exists and contains the node-token file from the server               |
-| **Apps not accessible**   | Verify your `/etc/hosts` file contains the correct entries for app1.com and app2.com               |
-| **VMware network issues** | Add `vb.vmx["ethernet0.pcislotnumber"] = "160"` to your VMware provider config in Vagrantfile      |
+| Issue                             | Solution                                                                                           |
+| --------------------------------- | -------------------------------------------------------------------------------------------------- |
+| **K3s fails to start**            | Verify that the `eth1` interface is properly configured in your VM. Check with `ip addr show eth1` |
+| **Worker not joining**            | Ensure the `token` directory exists and contains the node-token file from the server               |
+| **Apps not accessible**           | Verify your `/etc/hosts` file contains the correct entries for app1.com and app2.com               |
+| **VMware network issues**         | Add `vb.vmx["ethernet0.pcislotnumber"] = "160"` to your VMware provider config in Vagrantfile      |
+| **K3D cluster creation fails**    | Ensure Docker is running. Try `docker ps` to verify Docker daemon is active                        |
+| **ArgoCD UI not accessible**      | Check if port-forward is running with `make port-forward` in the p3 directory                      |
+| **ArgoCD application sync fails** | Verify Git repository access and correct path to manifests in application.yaml                     |
 
 ## 📝 Project Structure
 
@@ -162,6 +236,20 @@ The applications use the `mbelouar/hello-kubernetes:arm` container image which r
 │   │   └── ingress.yaml          # Ingress routing configuration
 │   └── scripts/
 │       └── startup.sh            # K3s installation and app deployment
+├── p3/                           # Part 3: CI/CD with K3D and ArgoCD
+│   ├── Makefile                  # Main automation commands
+│   ├── scripts/                  # Setup and utility scripts
+│   │   ├── cleanup.sh            # Cleans up resources
+│   │   ├── create_cluster.sh     # Creates the K3D cluster
+│   │   ├── install_argocd.sh     # Installs and configures ArgoCD
+│   │   ├── setup_ns.sh           # Sets up required namespaces
+│   │   └── startup.sh            # Main setup script
+│   └── src/                      # Application source files
+│       ├── application.yaml      # ArgoCD application definition
+│       └── dev/                  # Kubernetes manifests for the app
+│           ├── deployment.yaml   # App deployment configuration
+│           ├── ingress.yaml      # Ingress rules
+│           └── service.yaml      # Service definition
 ```
 
 ## 🔗 Resources
@@ -169,6 +257,8 @@ The applications use the `mbelouar/hello-kubernetes:arm` container image which r
 - [K3s Documentation](https://rancher.com/docs/k3s/latest/en/)
 - [Vagrant Documentation](https://www.vagrantup.com/docs)
 - [Kubernetes Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- [ArgoCD Documentation](https://argo-cd.readthedocs.io/en/stable/)
+- [K3D Documentation](https://k3d.io/)
 
 <div align="center">
   <sub>Created with ❤️ by Mohammed Belouarraq • June 2025</sub>
