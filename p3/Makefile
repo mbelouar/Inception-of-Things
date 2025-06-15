@@ -24,13 +24,16 @@ port-forward:
 # Delete cluster
 delete:
 	@echo "Deleting cluster..."
-	@k3d cluster delete p3
+	@k3d cluster delete p3 2>/dev/null || echo "Cluster already deleted or not found"
 
-# Clean everything
-clean: delete
-	@echo "Cleaning up resources..."
-	@kubectl delete -f ./src/application.yaml 2>/dev/null || echo "Application already deleted or cluster not accessible"
+# Clean everything thoroughly
+clean:
+	@echo "Cleaning up resources before deleting cluster..."
 	@bash ./scripts/cleanup.sh
+	@echo "Deleting cluster..."
+	@k3d cluster delete p3 2>/dev/null || echo "Cluster already deleted or not found"
+	@echo "Cleanup complete!"
+
 
 # Show help
 help:
