@@ -29,7 +29,7 @@ install_argocd() {
     
     print_status "ArgoCD installation complete!"
     print_status "To access ArgoCD UI:"
-    print_status "  1. Run: kubectl port-forward svc/argocd-server -n argocd 8080:443"
+    print_status "  1. Run: make port-forward"
     print_status "  2. Open: https://localhost:8080 (note: HTTPS, not HTTP)"
     print_status "  3. Login with username 'admin' and your password"
     print_status "  4. Accept the self-signed certificate warning"
