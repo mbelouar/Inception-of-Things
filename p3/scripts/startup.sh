@@ -62,7 +62,13 @@ main() {
     
     check_os
     install_tools
-    
+    source p3/scripts/create_cluster.sh
+    create_cluster
+    source p3/scripts/setup_ns.sh
+    setup_namespaces
+    source p3/scripts/install_argocd.sh
+    install_argocd
+
     print_status "Setup completed successfully!"
 }
 
