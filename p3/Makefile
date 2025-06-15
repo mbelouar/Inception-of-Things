@@ -1,49 +1,52 @@
+# ANSI color codes
+GREEN=\033[1;32m
+NC=\033[0m
+
 # Default target
 all: help
 
 # Setup the entire infrastructure
 setup: install deploy
-	@echo "Setup complete! Access ArgoCD UI with 'make port-forward'"
+	@echo "$(GREEN)Setup complete! Access ArgoCD UI with 'make port-forward'$(NC)"
 
 # Install dependencies and create cluster
 install:
-	@echo "Installing dependencies and creating cluster..."
+	@echo "$(GREEN)Installing dependencies and creating cluster...$(NC)"
 	@bash ./scripts/startup.sh
 
 # Deploy ArgoCD application
 deploy:
-	@echo "Deploying application..."
+	@echo "$(GREEN)Deploying application...$(NC)"
 	@kubectl apply -f ./src/application.yaml
 
 # Port forward ArgoCD UI
 port-forward:
-	@echo "Port forwarding ArgoCD UI..."
+	@echo "$(GREEN)Port forwarding ArgoCD UI...$(NC)"
 	@kubectl port-forward svc/argocd-server -n argocd 8080:443
-	@echo "Access ArgoCD UI at http://localhost:8080"
+	@echo "$(GREEN)Access ArgoCD UI at http://localhost:8080$(NC)"
 
 # Delete cluster
 delete:
-	@echo "Deleting cluster..."
-	@k3d cluster delete p3 2>/dev/null || echo "Cluster already deleted or not found"
+	@echo "$(GREEN)Deleting cluster...$(NC)"
+	@k3d cluster delete p3 2>/dev/null || echo "$(GREEN)Cluster already deleted or not found$(NC)"
 
 # Clean everything thoroughly
 clean:
-	@echo "Cleaning up resources before deleting cluster..."
+	@echo "$(GREEN)Cleaning up resources before deleting cluster...$(NC)"
 	@bash ./scripts/cleanup.sh
-	@echo "Deleting cluster..."
-	@k3d cluster delete p3 2>/dev/null || echo "Cluster already deleted or not found"
-	@echo "Cleanup complete!"
-
+	@echo "$(GREEN)Deleting cluster...$(NC)"
+	@k3d cluster delete p3 2>/dev/null || echo "$(GREEN)Cluster already deleted or not found$(NC)"
+	@echo "$(GREEN)Cleanup complete!$(NC)"
 
 # Show help
 help:
-	@echo "Available targets:"
-	@echo "  setup        - Install dependencies and deploy application"
-	@echo "  install      - Install dependencies and create K3d cluster"
-	@echo "  deploy       - Deploy application with ArgoCD"
-	@echo "  port-forward - Port forward ArgoCD UI"
-	@echo "  delete       - Delete K3d cluster"
-	@echo "  clean        - Delete cluster and cleanup resources"
-	@echo "  help         - Show this help message"
+	@echo "$(GREEN)Available targets:$(NC)"
+	@echo "$(GREEN)  setup        - Install dependencies and deploy application$(NC)"
+	@echo "$(GREEN)  install      - Install dependencies and create K3d cluster$(NC)"
+	@echo "$(GREEN)  deploy       - Deploy application with ArgoCD$(NC)"
+	@echo "$(GREEN)  port-forward - Port forward ArgoCD UI$(NC)"
+	@echo "$(GREEN)  delete       - Delete K3d cluster$(NC)"
+	@echo "$(GREEN)  clean        - Delete cluster and cleanup resources$(NC)"
+	@echo "$(GREEN)  help         - Show this help message$(NC)"
 
 .PHONY: all setup clean delete install deploy port-forward help
