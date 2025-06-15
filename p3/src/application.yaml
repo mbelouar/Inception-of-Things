@@ -1,14 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: guestbook
+  name: myapp-argo
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: https://github.com/argoproj/argocd-example-apps.git
+    repoURL: https://github.com/mbelouar/Inception-of-Things
     targetRevision: HEAD
-    path: guestbook
+    path: p3/src/dev
   destination:
     server: https://kubernetes.default.svc
-    namespace: guestbook
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
