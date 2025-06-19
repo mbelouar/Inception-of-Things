@@ -26,7 +26,7 @@ print_status "Deleting ArgoCD Applications..."
 kubectl delete applications --all -A --timeout=20s 2>/dev/null || true
 
 # Clean selected namespaces
-for ns in dev argocd; do
+for ns in dev argocd gitlab; do
     if kubectl get ns "$ns" &>/dev/null; then
         print_status "Deleting namespace '$ns'..."
         kubectl delete namespace "$ns" --timeout=30s || \

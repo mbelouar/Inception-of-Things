@@ -25,6 +25,11 @@ port-forward:
 	@kubectl port-forward svc/argocd-server -n argocd 8080:443
 	@echo "$(GREEN)Access ArgoCD UI at http://localhost:8080$(NC)"
 
+port-forward-gitlab:
+	@echo "$(GREEN)Port forwarding GitLab UI...$(NC)"
+	@kubectl port-forward svc/gitlab-webservice-default -n gitlab 8081:8080
+	@echo "$(GREEN)Access GitLab UI at http://localhost:8081$(NC)"
+
 # Delete cluster
 delete:
 	@echo "$(GREEN)Deleting cluster...$(NC)"

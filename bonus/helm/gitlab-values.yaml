@@ -1,0 +1,22 @@
+global:
+  hosts:
+    domain: localhost
+  ingress:
+    enabled: false
+
+certmanager:
+  install: false
+
+certmanager-issuer:
+  email: simobelouarraq5@gmail.com
+
+nginx-ingress:
+  enabled: false
+
+gitlab:
+  webservice:
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+  externalUrl: http://localhost:8081
