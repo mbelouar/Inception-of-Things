@@ -1,0 +1,17 @@
+# GitLab Runner Helm Chart configuration
+gitlabUrl: "https://gitlab.com"
+runnerRegistrationToken: "GR1348941WfzWQo1zqTx_Y11NgAKE"
+
+# Runner configuration
+rbac:
+  create: true
+
+runners:
+  config: |
+    [[runners]]
+      name = "k3s-runner"
+      executor = "kubernetes"
+      [runners.kubernetes]
+        namespace = "gitlab"
+        image = "docker:20.10.12"
+        privileged = true
