@@ -39,12 +39,5 @@ install_gitlab() {
         print_error "GitLab Runner deployment did not become available in time"
         exit 1
     fi
-    print_status "GitLab Runner is ready!"
-    print_status "To register your GitLab Runner, follow these steps:"
-    print_status "  1. Open your GitLab instance in a browser"
-    print_status "  2. Go to 'Settings' -> 'CI/CD' -> 'Runners'"
-    print_status "  3. Copy the registration token"
-    print_status "  4. Run: kubectl exec -it <gitlab-runner-pod-name> -n gitlab -- gitlab-runner register"
-    print_status "  5. Follow the prompts to register your runner with the token"
-    print_status "GitLab Runner installation complete!"
+    print_status "GitLab Runner installation complete and it is ready to use!"
 }
