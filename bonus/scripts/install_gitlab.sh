@@ -15,7 +15,7 @@ install_gitlab() {
 
     # Check if runner values file exists
     if [ ! -f "helm/gitlab-runner-values.yaml" ]; then
-        print_error "GitLab Runner values file not found at helm/gitlab-runner-values.yaml"
+        print_error "GitLab Runner values file nsnot found at helm/gitlab-runner-values.yaml"
         print_status "Please create the values file with your GitLab URL and registration token"
         exit 1
     fi
@@ -40,4 +40,8 @@ install_gitlab() {
         exit 1
     fi
     print_status "GitLab Runner installation complete and it is ready to use!"
+    print_status "To check the runner in the gitlab UI:"
+    print_status "  1. Open your GitLab instance in a browser"
+    print_status "  2. Go to 'Settings' -> 'CI / CD' -> 'Runners'"
+    print_status "  3. You should see the GitLab Runner listed there"
 }

@@ -6,18 +6,13 @@ NC=\033[0m
 all: help
 
 # Setup the entire infrastructure
-setup: install deploy
-	@echo "$(GREEN)Setup complete! Access ArgoCD UI with 'make port-forward'$(NC)"
+setup: install port-forward
+	@echo "$(GREEN)Setup complete! Access ArgoCD UI.$(NC)"
 
 # Install dependencies and create cluster
 install:
 	@echo "$(GREEN)Installing dependencies and creating cluster...$(NC)"
 	@bash ./scripts/startup.sh
-
-# Deploy ArgoCD application
-deploy:
-	@echo "$(GREEN)Deploying application...$(NC)"
-	@kubectl apply -f ./src/application.yaml
 
 # Port forward ArgoCD UI
 port-forward:

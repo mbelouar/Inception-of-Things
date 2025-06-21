@@ -11,6 +11,7 @@ runners:
     [[runners]]
       name = "k3s-runner"
       executor = "kubernetes"
+      tags = ["k3s", "kubernetes", "local"] 
       [runners.kubernetes]
         namespace = "gitlab"
         image = "docker:20.10.12"
