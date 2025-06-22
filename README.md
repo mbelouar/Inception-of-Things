@@ -56,6 +56,21 @@ This part implements a CI/CD pipeline using K3D and ArgoCD on macOS. It demonstr
     - ArgoCD: Continuous delivery tool
     - Playground app: Simple application with 2 replicas
 
+### 🔷 Bonus: GitLab Runner with ArgoCD Integration
+
+<img src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png" align="right" width="100">
+
+This bonus part expands on Part 3 by adding GitLab Runner to create a complete CI/CD pipeline. It integrates GitLab CI with ArgoCD for a full GitOps workflow from code commit to deployment.
+
+- **GitLab Runner Integration**:
+  - Components: GitLab Runner, Helm, Kubernetes RBAC
+  - Features:
+    - Automated CI pipeline execution
+    - Kubernetes-native job execution
+    - Integration with ArgoCD's GitOps workflow
+    - Complete end-to-end CI/CD pipeline
+  - GitLab Project: [https://gitlab.com/simobelouarraq5/Inception-Of-Things](https://gitlab.com/simobelouarraq5/Inception-Of-Things)
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -103,6 +118,15 @@ This part implements a CI/CD pipeline using K3D and ArgoCD on macOS. It demonstr
    ```
 
    > ℹ️ This creates a local K3D cluster, installs ArgoCD, and sets up an application deployment with GitOps workflow.
+
+5. Bonus: Set up GitLab Runner with ArgoCD for complete CI/CD pipeline
+
+   ```bash
+   cd ../bonus
+   make setup
+   ```
+
+   > ℹ️ This extends the K3D cluster with GitLab Runner for a complete GitOps CI/CD pipeline integrated with GitLab.
 
 ### 🌐 Accessing Applications (Part 2)
 
@@ -210,6 +234,8 @@ The application uses the `wil42/playground:v1` container image which runs on por
 | **K3D cluster creation fails**    | Ensure Docker is running. Try `docker ps` to verify Docker daemon is active                        |
 | **ArgoCD UI not accessible**      | Check if port-forward is running with `make port-forward` in the p3 directory                      |
 | **ArgoCD application sync fails** | Verify Git repository access and correct path to manifests in application.yaml                     |
+| **GitLab Runner not registering** | Check registration token in `bonus/helm/gitlab-runner-values.yaml`                                 |
+| **Runner pods stuck in Pending**  | Verify architecture compatibility in helper_image configuration                                    |
 
 ## 📝 Project Structure
 
@@ -250,6 +276,18 @@ The application uses the `wil42/playground:v1` container image which runs on por
 │           ├── deployment.yaml   # App deployment configuration
 │           ├── ingress.yaml      # Ingress rules
 │           └── service.yaml      # Service definition
+└── bonus/                        # Bonus: GitLab Runner with ArgoCD
+    ├── makefile                  # Main automation commands
+    ├── helm/                     # Helm chart configurations
+    │   ├── gitlab-runner-rbac.yaml  # RBAC permissions for GitLab Runner
+    │   └── gitlab-runner-values.yaml # Helm values for GitLab Runner
+    └── scripts/                  # Setup and utility scripts
+        ├── cleanup.sh            # Cleans up resources
+        ├── create_cluster.sh     # Creates the K3D cluster
+        ├── install_argocd.sh     # Installs and configures ArgoCD
+        ├── install_gitlab.sh     # Installs GitLab Runner
+        ├── setup_ns.sh           # Sets up required namespaces
+        └── startup.sh            # Main setup script
 ```
 
 ## 🔗 Resources
@@ -259,6 +297,9 @@ The application uses the `wil42/playground:v1` container image which runs on por
 - [Kubernetes Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 - [ArgoCD Documentation](https://argo-cd.readthedocs.io/en/stable/)
 - [K3D Documentation](https://k3d.io/)
+- [GitLab Runner Documentation](https://docs.gitlab.com/runner/)
+- [GitLab CI/CD Documentation](https://docs.gitlab.com/ee/ci/)
+- [GitLab Project](https://gitlab.com/simobelouarraq5/Inception-Of-Things)
 
 <div align="center">
   <sub>Created with ❤️ by Mohammed Belouarraq • June 2025</sub>
