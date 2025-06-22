@@ -13,12 +13,14 @@ install_gitlab() {
     fi  
     print_status "GitLab Helm repository added successfully"
 
-    # Check if runner values file exists
-    if [ ! -f "helm/gitlab-runner-values.yaml" ]; then
-        print_error "GitLab Runner values file nsnot found at helm/gitlab-runner-values.yaml"
-        print_status "Please create the values file with your GitLab URL and registration token"
-        exit 1
+    # configure the service account for GitLab Runner
+    print_status "Configuring service account for GitLab Runner..."
+    kubectl apply -f helm/gitlab-runner-rbac.yaml
+    if [ $? -ne 0 ]; then
+        print_error "Failed to configure service account for GitLab Runner"
+        exit 1  
     fi
+    print_status "Service account configured successfully"
 
     # Install GitLab Runner
     print_status "Installing GitLab Runner with Helm..."

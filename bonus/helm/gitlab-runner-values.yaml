@@ -5,14 +5,38 @@ runnerRegistrationToken: "GR1348941WfzWQo1zqTx_Y11NgAKE"
 # Runner configuration
 rbac:
   create: true
+  clusterWideAccess: true
+  serviceAccountName: gitlab-runner-sa  # Use the custom service account
+
+# Enable debug mode for troubleshooting
+logLevel: "debug"
 
 runners:
+  tags: "k3s,kubernetes,local"
+  runUntagged: false
   config: |
     [[runners]]
-      name = "k3s-runner"
-      executor = "kubernetes"
-      tags = ["k3s", "kubernetes", "local"] 
       [runners.kubernetes]
         namespace = "gitlab"
         image = "docker:20.10.12"
         privileged = true
+        helper_image = "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:arm64-v18.1.0"
+        disable_init_perms = true
+        helper_image_flavor = "alpine"
+        pull_policy = ["if-not-present"]
+        host = ""  # This empty string is correct - it enables in-cluster config
+        bearer_token_overwrite_allowed = true
+        service_account = "gitlab-runner-sa"  # Specify the service account for the pods
+
+# Add environment variable to ensure proper architecture
+envVars:
+  - name: KUBERNETES_HELPER_CPU_LIMIT
+    value: "500m"
+  - name: KUBERNETES_HELPER_MEMORY_LIMIT
+    value: "512Mi"
+  - name: KUBERNETES_HELPER_CPU_REQUEST
+    value: "250m"
+  - name: KUBERNETES_HELPER_MEMORY_REQUEST
+    value: "128Mi"
+  - name: RUNNER_HELPER_IMAGE
+    value: "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:arm64-v18.1.0"
