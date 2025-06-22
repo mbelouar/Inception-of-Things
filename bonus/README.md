@@ -1,10 +1,5 @@
 # 🎁 Bonus: CI/CD with GitLab Runner and ArgoCD
 
-[![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
-[![K3D](https://img.shields.io/badge/k3d-%230075A8.svg?style=for-the-badge&logo=rancher&logoColor=white)](https://k3s.io/)
-[![ArgoCD](https://img.shields.io/badge/argocd-%232A7DE1.svg?style=for-the-badge&logo=argo&logoColor=white)](https://argoproj.github.io/cd/)
-[![GitLab](https://img.shields.io/badge/gitlab-%23FC6D26.svg?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/)
-
 This bonus part extends the project by implementing a complete GitOps CI/CD pipeline using GitLab Runner and ArgoCD, demonstrating real-world CI/CD practices for Kubernetes applications.
 
 </div>
