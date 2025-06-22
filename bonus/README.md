@@ -1,8 +1,5 @@
 # 🎁 Bonus: CI/CD with GitLab Runner and ArgoCD
 
-<div align="center">
-  <img src="../images/Inceptionofthings.png" alt="Inception of Things" width="400">
-
 [![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 [![K3D](https://img.shields.io/badge/k3d-%230075A8.svg?style=for-the-badge&logo=rancher&logoColor=white)](https://k3s.io/)
 [![ArgoCD](https://img.shields.io/badge/argocd-%232A7DE1.svg?style=for-the-badge&logo=argo&logoColor=white)](https://argoproj.github.io/cd/)
